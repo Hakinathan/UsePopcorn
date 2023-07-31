@@ -14,11 +14,17 @@ import { KEY } from "../config";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+
+  // 👉🏻 A state can use a callback function to initialize its value.
+  // const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(function () {
+    const watched = localStorage.getItem("watched");
+    return watched ? JSON.parse(watched) : [];
+  });
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -36,6 +42,13 @@ export default function App() {
     setWatched((watched) => watched.filter((movie) => movie.imdbId !== id));
   }
 
+  // Effect to save watched movies to localStorage with Watched value in dependency array
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
+
+  // Effect to fetch movies from API with Query value in dependency array
+  // Query === user input in Search component
   useEffect(
     function () {
       const controller = new AbortController();
