@@ -11,14 +11,14 @@ import MovieDetails from "./MovieDetails";
 import WatchedSummary from "./WatchedSummary";
 import WatchedMoviesList from "./WatchedMoviesList";
 import { useMovies } from "../hooks/useMovies";
-import { useLocalSroageState } from "../hooks/useLocalStorageState";
+import { useLocalStorage } from "../hooks/useLocalStorageState";
 import { useKey } from "../hooks/useKey";
 
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const { movies, isLoading, error } = useMovies(query);
-  const [watched, setWatched] = useLocalSroageState([], "watched");
+  const [watched, setWatched] = useLocalStorage([], "watched");
 
   useKey("Escape", handleCloseMovie);
 
