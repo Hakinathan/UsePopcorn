@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
  * @param {string} key - The key to use when storing the state in localStorage.
  * @returns {[*, Function]} - An array containing the current state value and a function to update it.
  */
-export function useLocalSroageState(initialState, key) {
+export function useLocalStorage(initialState, key) {
   const [value, setValue] = useState(function () {
     const storedValue = localStorage.getItem(key);
     return storedValue ? JSON.parse(storedValue) : initialState;
